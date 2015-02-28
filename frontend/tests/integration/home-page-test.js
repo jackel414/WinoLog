@@ -17,3 +17,19 @@ test('Should welcome users to Wino Log', function() {
 		equal(find('h2#title').text(), 'Wino Log');
 	});
 });
+
+test('Should nagivate to home page from learn page', function() {
+	visit('/learn').then(function() {
+		click("a:contains('Home')").then(function() {
+			equal(find('h2#title').text(), 'Wino Log');
+		});
+	});
+});
+
+test('Should nagivate to home page from About page', function() {
+	visit('/about').then(function() {
+		click("a:contains('Home')").then(function() {
+			equal(find('h2#title').text(), 'Wino Log');
+		});
+	});
+});
