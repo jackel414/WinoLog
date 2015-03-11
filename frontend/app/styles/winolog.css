@@ -6,3 +6,9 @@
 	height: 300px;
   background: url('/background_image.jpg') no-repeat center center;
 }
+
+.navbar {
+	background-color: white;
+	border: none;
+}
+
