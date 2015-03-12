@@ -1,7 +1,28 @@
-<div class="container">
-	<h2 id="title">Wino Log</h2>
-	<p>Coming soon...</p>
-</div>
+<div class="container navbar navbar-default">
+	<div class="navbar-header">
+		{{#link-to 'application' class='navbar-brand' id='title'}}Wino Log{{/link-to}}
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle Navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>
+	<ul class="nav navbar-nav navbar-right collapse navbar-collapse">
+		<li>
+			{{#link-to 'application' class='active'}}Home{{/link-to}}
+		</li>
+		<li>
+			{{#link-to 'learn'}}Learn{{/link-to}}
+		</li>
+		<li>
+			{{#link-to 'pair'}}Pair{{/link-to}}
+		</li>
+		<li>
+			{{#link-to 'about'}}About{{/link-to}}
+		</li>
+	</ul>
+</div>	
 <div class="jumbotron">
 </div>
 
