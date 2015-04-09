@@ -6,9 +6,9 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-	this.route('about');
-	this.route('learn');
-	this.route('pair');
+	this.route('cellar');
+	this.route('library');
+	this.route('profile');
 });
 
 export default Router;
