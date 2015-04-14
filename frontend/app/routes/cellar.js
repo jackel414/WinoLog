@@ -3,6 +3,6 @@ import API from '../api';
 
 export default Ember.Route.extend({
     model: function() {
-        return API.get('library');
+        return API.get('cellar');
     }
 });
