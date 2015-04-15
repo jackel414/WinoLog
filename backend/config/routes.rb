@@ -2,6 +2,7 @@ Rails.application.routes.draw do
     namespace :api do
         resources :library
         resources :cellar
+        resources :sessions
     end
         
   # The priority is based upon order of creation: first created -> highest priority.

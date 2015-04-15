@@ -1,8 +1,7 @@
 class Api::LibraryController < ApplicationController
     def index
         case request.headers['Authorization']
-            when 'Token token=user'
-            when 'Token token=admin'
+            when 'Token token=user','Token token=admin'
                 render :nothing => true, :status => 200
 
             when 'Token token=expired'

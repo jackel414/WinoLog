@@ -13,7 +13,7 @@ var API = {
             password: password
         };
         
-        var deferred = $.post('/session', payload).then(
+        var deferred = $.post('/api/sessions', payload).then(
             function(data) {
                 self.token = data.token;
                 return data.user;
@@ -31,7 +31,7 @@ var API = {
         
         var settings = { type: 'DELETE', headers: { 'Authorization': 'Token token=' + this.token } };
         
-        var deferred = $.ajax('/session', settings).then(function() {
+        var deferred = $.ajax('/api/sessions', settings).then(function() {
             self.token = null;
         });
         
