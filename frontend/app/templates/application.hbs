@@ -12,8 +12,11 @@
         <li>{{#link-to 'application' class='active'}}Home{{/link-to}}</li>
         <li>{{#link-to 'cellar'}}The Cellar{{/link-to}}</li>
         <li>{{#link-to 'library'}}The Library{{/link-to}}</li>
-        <li>{{#link-to 'profile'}}My Profile{{/link-to}}</li>
-        <li>{{#link-to 'login'}}Login{{/link-to}}</li>
+        {{#if session.user}}
+            <li>{{#link-to 'profile'}}My Profile{{/link-to}}</li>
+        {{else}}
+            <li>{{#link-to 'login'}}Login{{/link-to}}</li>
+        {{/if}}
     </ul>
 </div>	
 <div class="jumbotron">
