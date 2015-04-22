@@ -13,14 +13,18 @@ export default Ember.Route.extend({
 
             API.login(username, password).then(
                 function(user) {
-                    var transition = controller.get('transition');
+                    if (user) {
+                        var transition = controller.get('transition');
 
-                    route.session.set('user', user);
+                        route.session.set('user', user);
 
-                    if (transition) {
-                        transition.retry();
+                        if (transition) {
+                            transition.retry();
+                        } else {
+                            route.transitionTo('index');
+                        }
                     } else {
-                        route.transitionTo('index');
+                        route.transitionTo('error');
                     }
                 },
                 function(error) {
@@ -32,6 +36,12 @@ export default Ember.Route.extend({
             this.transitionTo('index');
         }
     },
+
+    beforeModel: function() {
+        API.token = null;
+        this.session.set('user', null);
+    },
+
     resetController: function(controller) {
         controller.setProperties({
             username: null,
@@ -39,8 +49,5 @@ export default Ember.Route.extend({
             message: null,
             transition: null
         });
-    },
-    renderTemplate: function() {
-        this.render('login', { layout: false });
     }
 });
