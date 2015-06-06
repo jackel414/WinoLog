@@ -28,3 +28,20 @@ body {
     border: none;
 }
 
+.home-panel {
+    height: 800px;
+}
+
+.home-panel.top-panel {
+    background: url('/front-image.jpg') no-repeat center top;
+}
+
+.top-panel-text {
+    text-align: center;
+    margin-top: 160px;
+    color: white;
+}
+
+.top-panel-text h1 {
+    font-family: 'Lobster', cursive;
+}
