@@ -45,3 +45,19 @@ body {
 .top-panel-text h1 {
     font-family: 'Lobster', cursive;
 }
+
+#footer {
+    height: 100px;
+    background-color: #cccccc;
+}
+
+.footer-links {
+    text-align: center;
+    padding-top: 40px;
+    color: white;
+}
+
+.footer-links a {
+    color: white;
+    padding: 0 20px;
+}
