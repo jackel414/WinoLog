@@ -24,8 +24,17 @@ body {
 }
 
 .navbar {
-    background-color: white;
+    background: url('/navbar-background.jpg') no-repeat center center;
     border: none;
+    color: white;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
 }
 
 .home-panel {
@@ -34,6 +43,14 @@ body {
 
 .home-panel.top-panel {
     background: url('/front-image.jpg') no-repeat center top;
+}
+
+.home-panel.cellar-panel {
+    background: url('/cellar.jpg') no-repeat center top;
+}
+
+.home-panel.library-panel {
+    background: url('/grapes.jpg') no-repeat center center;
 }
 
 .top-panel-text {

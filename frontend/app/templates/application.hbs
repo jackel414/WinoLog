@@ -1,4 +1,5 @@
-<div class="container navbar navbar-default collapse">
+{{#unless isCurrentRouteIndex}}
+<div class="container navbar navbar-default">
     <div class="navbar-header">
         {{#link-to 'application' class='navbar-brand' id='title'}}Wino Log{{/link-to}}
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,6 +20,7 @@
         {{/if}}
     </ul>
 </div>	
+{{/unless}}
 
 {{outlet}}
 
