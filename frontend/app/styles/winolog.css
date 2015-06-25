@@ -5,6 +5,18 @@ body {
     font-family: 'News Cycle', sans-serif;
 }
 
+h1 {
+    font-family: 'Lobster', cursive;
+}
+
+/****
+*
+*
+*  GENERAL STYLES
+*
+*
+****/
+
 #title {
     font-family: 'Lobster', cursive;
     font-size: 30px;
@@ -23,6 +35,8 @@ body {
     height: 50px;
 }
 
+/*** NAVBAR ***/
+
 .navbar {
     background: url('/navbar-background.jpg') no-repeat center center;
     border: none;
@@ -37,31 +51,7 @@ body {
     color: white;
 }
 
-.home-panel {
-    height: 800px;
-}
-
-.home-panel.top-panel {
-    background: url('/front-image.jpg') no-repeat center top;
-}
-
-.home-panel.cellar-panel {
-    background: url('/cellar.jpg') no-repeat center top;
-}
-
-.home-panel.library-panel {
-    background: url('/grapes.jpg') no-repeat center center;
-}
-
-.top-panel-text {
-    text-align: center;
-    margin-top: 160px;
-    color: white;
-}
-
-.top-panel-text h1 {
-    font-family: 'Lobster', cursive;
-}
+/*** FOOTER ***/
 
 #footer {
     height: 100px;
@@ -78,3 +68,77 @@ body {
     color: white;
     padding: 0 20px;
 }
+
+/****
+*
+*
+*  HOMEPAGE STYLES
+*
+*
+****/
+
+/*** TOP PANEL ***/
+
+.home-panel {
+    height: 800px;
+}
+
+.home-panel.top-panel {
+    background: url('/front-image.jpg') no-repeat center top;
+}
+
+.top-panel-text {
+    text-align: center;
+    margin-top: 160px;
+    color: white;
+}
+
+.top-panel-text h1 {
+    font-family: 'Lobster', cursive;
+}
+
+/*** SECOND PANEL ***/
+
+.home-panel.second-panel {
+    background-color: #e2e5d4;
+}
+
+.second-panel-text h1 {
+    margin-top: 0;
+    padding-top: 80px;
+}
+
+.image-panels {
+    margin-top: 80px;
+}
+
+.image-panels div {
+    height: 320px;
+    display: inline-block;
+    width: 49%;
+    box-shadow: 5px 5px 10px #888888;
+}
+
+.image-panels h2 {
+    color: white;
+    margin-top: 120px;
+    font-size: 50px;
+}
+
+.cellar-image-panel {
+    margin-right: 15px;
+    background: url('/cellar.jpg') no-repeat center center;
+}
+
+.library-image-panel {
+    background: url('/grapes.jpg') no-repeat center center;
+/*
+    box-shadow: 10px 10px 5px #888888;
+*/
+}
+
+/*** THIRD PANEL ***/
+
+.home-panel.third-panel {
+}
+
