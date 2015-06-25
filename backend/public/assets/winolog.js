@@ -979,7 +979,7 @@ catch(err) {
 if (runningTests) {
   require("winolog/tests/test-helper");
 } else {
-  require("winolog/app")["default"].create({"name":"winolog","version":"0.0.0.a3dd5476"});
+  require("winolog/app")["default"].create({"name":"winolog","version":"0.0.0.cd8ab4c8"});
 }
 
 /* jshint ignore:end */
