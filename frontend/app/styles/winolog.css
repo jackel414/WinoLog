@@ -119,6 +119,10 @@ h1 {
     box-shadow: 5px 5px 10px #888888;
 }
 
+.image-panels div:hover {
+    cursor: pointer;
+}
+
 .image-panels h2 {
     color: white;
     margin-top: 120px;
