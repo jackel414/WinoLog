@@ -17,6 +17,10 @@ h1 {
 *
 ****/
 
+#main-content {
+    min-height: 600px;
+}
+
 #title {
     font-family: 'Lobster', cursive;
     font-size: 30px;
@@ -33,6 +37,10 @@ h1 {
 
 .jumbotron.small-header {
     height: 50px;
+}
+
+.top-space {
+    margin-top: 50px;
 }
 
 /*** NAVBAR ***/
