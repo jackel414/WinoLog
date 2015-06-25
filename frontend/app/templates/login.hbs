@@ -1,22 +1,24 @@
-<div class="col-sm-4 col-sm-offset-4">
-    {{#if message}}
-        <p>{{message}}</p>
-    {{/if}}
-    <h3>Please Login</h3>
-    
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        {{input name="username" value=username class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email"}}
+<div class="row top-space">
+    <div class="col-sm-4 col-sm-offset-4">
+        {{#if message}}
+            <p class="alert alert-danger">{{message}}</p>
+        {{/if}}
+        <h3>Please Login</h3>
+        
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            {{input name="username" value=username class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email"}}
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            {{input name="password" value=password class="form-control" id="exampleInputPassword1" placeholder="Password" type="password"}}
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Remember me
+            </label>
+        </div>
+        <button {{action "submit"}}>Submit</button>
+        <button {{action "cancel"}}>Cancel</button>
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        {{input name="password" value=password class="form-control" id="exampleInputPassword1" placeholder="Password" type="password"}}
-    </div>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox"> Remember me
-        </label>
-    </div>
-    <button {{action "submit"}}>Submit</button>
-    <button {{action "cancel"}}>Cancel</button>
 </div>

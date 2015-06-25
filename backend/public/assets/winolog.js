@@ -78,6 +78,31 @@ define('winolog/app', ['exports', 'ember', 'ember/resolver', 'ember/load-initial
   exports['default'] = App;
 
 });
+define('winolog/controllers/application', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Controller.extend({
+        isCurrentRouteIndex: Ember['default'].computed.equal("currentRouteName", "index")
+    });
+
+});
+define('winolog/controllers/index', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Controller.extend({
+        actions: {
+            goToCellar: function () {
+                this.transitionToRoute("cellar");
+            },
+            goToLibrary: function () {
+                this.transitionToRoute("library");
+            }
+        }
+    });
+
+});
 define('winolog/controllers/login', ['exports', 'ember'], function (exports, Ember) {
 
 	'use strict';
@@ -137,6 +162,18 @@ define('winolog/initializers/inject-session', ['exports', 'ember'], function (ex
     };
 
 });
+define('winolog/mixins/reset-scroll', ['exports', 'ember'], function (exports, Ember) {
+
+    'use strict';
+
+    exports['default'] = Ember['default'].Mixin.create({
+        activate: function () {
+            this._super();
+            window.scrollTo(0, 0);
+        }
+    });
+
+});
 define('winolog/router', ['exports', 'ember', 'winolog/config/environment'], function (exports, Ember, config) {
 
 	'use strict';
@@ -149,6 +186,7 @@ define('winolog/router', ['exports', 'ember', 'winolog/config/environment'], fun
 		this.route("cellar");
 		this.route("library");
 		this.route("profile");
+		this.route("about");
 		this.route("login");
 	});
 
@@ -210,17 +248,23 @@ define('winolog/routes/library', ['exports', 'ember', 'winolog/api'], function (
     'use strict';
 
     exports['default'] = Ember['default'].Route.extend({
+        beforeModel: function () {
+            if (!this.session.get("user")) {
+                return Ember['default'].RSVP.reject({ status: "Unauthorized", message: "Please login to access this page" });
+            }
+        },
+
         model: function () {
             return API['default'].get("library");
         }
     });
 
 });
-define('winolog/routes/login', ['exports', 'ember', 'winolog/api'], function (exports, Ember, API) {
+define('winolog/routes/login', ['exports', 'ember', 'winolog/api', 'winolog/mixins/reset-scroll'], function (exports, Ember, API, ResetScroll) {
 
     'use strict';
 
-    exports['default'] = Ember['default'].Route.extend({
+    exports['default'] = Ember['default'].Route.extend(ResetScroll['default'], {
         actions: {
             submit: function () {
                 var route = this;
@@ -269,6 +313,21 @@ define('winolog/routes/login', ['exports', 'ember', 'winolog/api'], function (ex
     });
 
 });
+define('winolog/templates/about', ['exports', 'ember'], function (exports, Ember) {
+
+  'use strict';
+
+  exports['default'] = Ember['default'].Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+  helpers = this.merge(helpers, Ember['default'].Handlebars.helpers); data = data || {};
+    
+
+
+    data.buffer.push("<div class=\"container\">\n    <h3>About</h3>\n</div>");
+    
+  });
+
+});
 define('winolog/templates/application', ['exports', 'ember'], function (exports, Ember) {
 
   'use strict';
@@ -280,82 +339,108 @@ define('winolog/templates/application', ['exports', 'ember'], function (exports,
 
   function program1(depth0,data) {
     
+    var buffer = '', stack1, helper, options;
+    data.buffer.push("\n<div class=\"container navbar navbar-default\">\n    <div class=\"navbar-header\">\n        ");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+      'class': ("navbar-brand"),
+      'id': ("title")
+    },hashTypes:{'class': "STRING",'id': "STRING"},hashContexts:{'class': depth0,'id': depth0},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application", options) : helperMissing.call(depth0, "link-to", "application", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push("\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n            <span class=\"sr-only\">Toggle Navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n        </button>\n    </div>\n    <ul class=\"nav navbar-nav navbar-right collapse navbar-collapse\">\n        <li>");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
+      'class': ("active")
+    },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application", options) : helperMissing.call(depth0, "link-to", "application", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push("</li>\n        <li>");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "cellar", options) : helperMissing.call(depth0, "link-to", "cellar", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push("</li>\n        <li>");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "library", options) : helperMissing.call(depth0, "link-to", "library", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push("</li>\n        ");
+    stack1 = helpers['if'].call(depth0, "session.user", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(13, program13, data),fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push("\n    </ul>\n</div>	\n");
+    return buffer;
+    }
+  function program2(depth0,data) {
+    
     
     data.buffer.push("Wino Log");
     }
 
-  function program3(depth0,data) {
+  function program4(depth0,data) {
     
     
     data.buffer.push("Home");
     }
 
-  function program5(depth0,data) {
+  function program6(depth0,data) {
     
     
     data.buffer.push("The Cellar");
     }
 
-  function program7(depth0,data) {
+  function program8(depth0,data) {
     
     
     data.buffer.push("The Library");
     }
 
-  function program9(depth0,data) {
+  function program10(depth0,data) {
     
     var buffer = '', stack1, helper, options;
     data.buffer.push("\n            <li>");
-    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "profile", options) : helperMissing.call(depth0, "link-to", "profile", options));
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(11, program11, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "profile", options) : helperMissing.call(depth0, "link-to", "profile", options));
     if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
     data.buffer.push("</li>\n        ");
     return buffer;
     }
-  function program10(depth0,data) {
+  function program11(depth0,data) {
     
     
     data.buffer.push("My Profile");
     }
 
-  function program12(depth0,data) {
+  function program13(depth0,data) {
     
     var buffer = '', stack1, helper, options;
     data.buffer.push("\n            <li>");
-    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(13, program13, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "login", options) : helperMissing.call(depth0, "link-to", "login", options));
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(14, program14, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "login", options) : helperMissing.call(depth0, "link-to", "login", options));
     if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
     data.buffer.push("</li>\n        ");
     return buffer;
     }
-  function program13(depth0,data) {
+  function program14(depth0,data) {
     
     
     data.buffer.push("Login");
     }
 
-    data.buffer.push("<div class=\"container navbar navbar-default\">\n    <div class=\"navbar-header\">\n        ");
-    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-      'class': ("navbar-brand"),
-      'id': ("title")
-    },hashTypes:{'class': "STRING",'id': "STRING"},hashContexts:{'class': depth0,'id': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application", options) : helperMissing.call(depth0, "link-to", "application", options));
+  function program16(depth0,data) {
+    
+    
+    data.buffer.push("About");
+    }
+
+    stack1 = helpers.unless.call(depth0, "isCurrentRouteIndex", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
     if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n            <span class=\"sr-only\">Toggle Navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n        </button>\n    </div>\n    <ul class=\"nav navbar-nav navbar-right collapse navbar-collapse\">\n        <li>");
-    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
-      'class': ("active")
-    },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application", options) : helperMissing.call(depth0, "link-to", "application", options));
-    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("</li>\n        <li>");
-    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "cellar", options) : helperMissing.call(depth0, "link-to", "cellar", options));
-    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("</li>\n        <li>");
-    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(7, program7, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "library", options) : helperMissing.call(depth0, "link-to", "library", options));
-    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("</li>\n        ");
-    stack1 = helpers['if'].call(depth0, "session.user", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(12, program12, data),fn:self.program(9, program9, data),contexts:[depth0],types:["ID"],data:data});
-    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("\n    </ul>\n</div>	\n<div class=\"jumbotron\">\n</div>\n\n<div class=\"container\">\n    ");
+    data.buffer.push("\n\n<div id=\"main-content\">\n    ");
     stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
     if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("\n</div>\n");
+    data.buffer.push("\n</div>\n\n<div id=\"footer\">\n    <div class=\"footer-links\">\n        ");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "application", options) : helperMissing.call(depth0, "link-to", "application", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push(" | ");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "cellar", options) : helperMissing.call(depth0, "link-to", "cellar", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push(" | ");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "library", options) : helperMissing.call(depth0, "link-to", "library", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push(" | ");
+    stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(16, program16, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "about", options) : helperMissing.call(depth0, "link-to", "about", options));
+    if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+    data.buffer.push("\n    </div>\n</div>");
     return buffer;
     
   });
@@ -371,7 +456,7 @@ define('winolog/templates/cellar', ['exports', 'ember'], function (exports, Embe
     
 
 
-    data.buffer.push("<h2>Your Wine Cellar</h2>\n\n<div>\n    &nbsp;\n</div>\n\n<div class=\"col-sm-10 col-sm-offset-1\">\n    <table class=\"table table-condensed table-bordered table-hover\">\n        <thead>\n            <tr>\n                <th>Wine Name</th>\n                <th>Grapes</th>\n                <th>Region / Country</th>\n                <th>Bottles</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>14 Hands</td>\n                <td>Merlot</td>\n                <td>Washington State, USA</td>\n                <td>1</td>\n            </tr>\n        </tbody>\n    </table>\n</div>\n    \n<div class=\"col-sm-12\">\n    <a href=\"#\">View History</a> &nbsp;|&nbsp; <a href=\"#\">Add Wine</a>\n</div>");
+    data.buffer.push("<div class=\"container\">\n    <h2>Your Wine Cellar</h2>\n    \n    <div>\n        &nbsp;\n    </div>\n    \n    <div class=\"col-sm-10 col-sm-offset-1\">\n        <table class=\"table table-condensed table-bordered table-hover\">\n            <thead>\n                <tr>\n                    <th>Wine Name</th>\n                    <th>Grapes</th>\n                    <th>Region / Country</th>\n                    <th>Bottles</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr>\n                    <td>14 Hands</td>\n                    <td>Merlot</td>\n                    <td>Washington State, USA</td>\n                    <td>1</td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n        \n    <div class=\"col-sm-12\">\n        <a href=\"#\">View History</a> &nbsp;|&nbsp; <a href=\"#\">Add Wine</a>\n    </div>\n</div>");
     
   });
 
@@ -415,10 +500,15 @@ define('winolog/templates/index', ['exports', 'ember'], function (exports, Ember
   exports['default'] = Ember['default'].Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
   helpers = this.merge(helpers, Ember['default'].Handlebars.helpers); data = data || {};
-    
+    var buffer = '', escapeExpression=this.escapeExpression;
 
 
-    data.buffer.push("<h3>Welcome!</h3>\n<p>Welcome to Wino Log, your one stop for all things wine. You can track wine in your cellar, figure out the perfect wine pairing, and even learn a thing or two about growing regions around the world.</p>\n<p>All this is coming soon, so stay tuned!</p>");
+    data.buffer.push("<div class=\"home-panel top-panel\">\n    <div class=\"top-panel-text col-sm-6 col-sm-offset-3\">\n        <h1>Wino Log</h1>\n    </div>\n</div>\n<div class=\"home-panel second-panel\">\n    <div class=\"second-panel-text text-center\">\n        <h1>Welcome to Wino Log</h1>\n        <h4>Track the wine in your cellar, find the perfect wine pairing, and even learn a thing or two about growing regions around the world.</h4>\n    </div>\n    <div class=\"image-panels col-sm-10 col-sm-offset-1\">\n        <div class=\"cellar-image-panel text-center\" ");
+    data.buffer.push(escapeExpression(helpers.action.call(depth0, "goToCellar", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+    data.buffer.push(" >\n            <h2>Cellar</h2>\n        </div>\n        <div class=\"library-image-panel text-center\" ");
+    data.buffer.push(escapeExpression(helpers.action.call(depth0, "goToLibrary", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+    data.buffer.push(">\n            <h2>Library</h2>\n        </div>\n    </div>\n</div>\n<div class=\"home-panel third-panel collapse\">\n</div>");
+    return buffer;
     
   });
 
@@ -433,7 +523,7 @@ define('winolog/templates/library', ['exports', 'ember'], function (exports, Emb
     
 
 
-    data.buffer.push("<h3>Pair</h3>");
+    data.buffer.push("<div class=\"container\">\n    <h3>Pair</h3>\n</div>");
     
   });
 
@@ -450,17 +540,17 @@ define('winolog/templates/login', ['exports', 'ember'], function (exports, Ember
   function program1(depth0,data) {
     
     var buffer = '', stack1;
-    data.buffer.push("\n        <p>");
+    data.buffer.push("\n            <p class=\"alert alert-danger\">");
     stack1 = helpers._triageMustache.call(depth0, "message", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
     if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("</p>\n    ");
+    data.buffer.push("</p>\n        ");
     return buffer;
     }
 
-    data.buffer.push("<div class=\"col-sm-4 col-sm-offset-4\">\n    ");
+    data.buffer.push("<div class=\"row top-space\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n        ");
     stack1 = helpers['if'].call(depth0, "message", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
     if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-    data.buffer.push("\n    <h3>Please Login</h3>\n    \n    <div class=\"form-group\">\n        <label for=\"exampleInputEmail1\">Email address</label>\n        ");
+    data.buffer.push("\n        <h3>Please Login</h3>\n        \n        <div class=\"form-group\">\n            <label for=\"exampleInputEmail1\">Email address</label>\n            ");
     data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
       'name': ("username"),
       'value': ("username"),
@@ -469,7 +559,7 @@ define('winolog/templates/login', ['exports', 'ember'], function (exports, Ember
       'placeholder': ("Enter email"),
       'type': ("email")
     },hashTypes:{'name': "STRING",'value': "ID",'class': "STRING",'id': "STRING",'placeholder': "STRING",'type': "STRING"},hashContexts:{'name': depth0,'value': depth0,'class': depth0,'id': depth0,'placeholder': depth0,'type': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-    data.buffer.push("\n    </div>\n    <div class=\"form-group\">\n        <label for=\"exampleInputPassword1\">Password</label>\n        ");
+    data.buffer.push("\n        </div>\n        <div class=\"form-group\">\n            <label for=\"exampleInputPassword1\">Password</label>\n            ");
     data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
       'name': ("password"),
       'value': ("password"),
@@ -478,11 +568,11 @@ define('winolog/templates/login', ['exports', 'ember'], function (exports, Ember
       'placeholder': ("Password"),
       'type': ("password")
     },hashTypes:{'name': "STRING",'value': "ID",'class': "STRING",'id': "STRING",'placeholder': "STRING",'type': "STRING"},hashContexts:{'name': depth0,'value': depth0,'class': depth0,'id': depth0,'placeholder': depth0,'type': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-    data.buffer.push("\n    </div>\n    <div class=\"checkbox\">\n        <label>\n            <input type=\"checkbox\"> Remember me\n        </label>\n    </div>\n    <button ");
+    data.buffer.push("\n        </div>\n        <div class=\"checkbox\">\n            <label>\n                <input type=\"checkbox\"> Remember me\n            </label>\n        </div>\n        <button ");
     data.buffer.push(escapeExpression(helpers.action.call(depth0, "submit", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-    data.buffer.push(">Submit</button>\n    <button ");
+    data.buffer.push(">Submit</button>\n        <button ");
     data.buffer.push(escapeExpression(helpers.action.call(depth0, "cancel", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-    data.buffer.push(">Cancel</button>\n</div>\n");
+    data.buffer.push(">Cancel</button>\n    </div>\n</div>");
     return buffer;
     
   });
@@ -498,7 +588,7 @@ define('winolog/templates/profile', ['exports', 'ember'], function (exports, Emb
     
 
 
-    data.buffer.push("<h3>About</h3>");
+    data.buffer.push("<div class=\"container\">\n    <h3>Profile</h3>\n</div>");
     
   });
 
@@ -520,6 +610,26 @@ define('winolog/tests/app.jshint', function () {
   module('JSHint - .');
   test('app.js should pass jshint', function() { 
     ok(true, 'app.js should pass jshint.'); 
+  });
+
+});
+define('winolog/tests/controllers/application.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers');
+  test('controllers/application.js should pass jshint', function() { 
+    ok(true, 'controllers/application.js should pass jshint.'); 
+  });
+
+});
+define('winolog/tests/controllers/index.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - controllers');
+  test('controllers/index.js should pass jshint', function() { 
+    ok(true, 'controllers/index.js should pass jshint.'); 
   });
 
 });
@@ -768,6 +878,16 @@ define('winolog/tests/integration/pair-page-test.jshint', function () {
   });
 
 });
+define('winolog/tests/mixins/reset-scroll.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - mixins');
+  test('mixins/reset-scroll.js should pass jshint', function() { 
+    ok(false, 'mixins/reset-scroll.js should pass jshint.\nmixins/reset-scroll.js: line 1, col 26, Missing semicolon.\n\n1 error'); 
+  });
+
+});
 define('winolog/tests/router.jshint', function () {
 
   'use strict';
@@ -859,7 +979,7 @@ catch(err) {
 if (runningTests) {
   require("winolog/tests/test-helper");
 } else {
-  require("winolog/app")["default"].create({"name":"winolog","version":"0.0.0.3b5beb3f"});
+  require("winolog/app")["default"].create({"name":"winolog","version":"0.0.0.a3dd5476"});
 }
 
 /* jshint ignore:end */

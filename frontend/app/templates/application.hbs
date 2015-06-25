@@ -1,3 +1,4 @@
+{{#unless isCurrentRouteIndex}}
 <div class="container navbar navbar-default">
     <div class="navbar-header">
         {{#link-to 'application' class='navbar-brand' id='title'}}Wino Log{{/link-to}}
@@ -19,9 +20,14 @@
         {{/if}}
     </ul>
 </div>	
-<div class="jumbotron">
+{{/unless}}
+
+<div id="main-content">
+    {{outlet}}
 </div>
 
-<div class="container">
-    {{outlet}}
+<div id="footer">
+    <div class="footer-links">
+        {{#link-to 'application'}}Home{{/link-to}} | {{#link-to 'cellar'}}The Cellar{{/link-to}} | {{#link-to 'library'}}The Library{{/link-to}} | {{#link-to 'about'}}About{{/link-to}}
+    </div>
 </div>

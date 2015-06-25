@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import API from '../api';
+import ResetScroll from "../mixins/reset-scroll";
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(ResetScroll, {
     actions: {
         submit: function() {
             var route = this;
